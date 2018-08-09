@@ -45,7 +45,7 @@ namespace cengine {
 
         int getScreenWidth() const;
 
-        int getScreenHeigth() const;
+        int getScreenHeight() const;
 
         const std::string &getWindowName() const;
 

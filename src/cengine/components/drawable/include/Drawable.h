@@ -8,10 +8,11 @@
 
 #include <vector>
 #include <GL/glew.h>
-#include "Vertex.h"
+#include "Vector2.h"
 #include "../../Component.h"
 
 namespace cengine {
+    
     class Drawable : Component {
     public:
         Drawable();

@@ -1,8 +1,27 @@
 cmake_minimum_required(VERSION 3.10)
-project(Cengine)
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+project(CEngine)
 
 set(CMAKE_CXX_STANDARD 11)
+set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
 
-add_executable(Cengine cengine_test.cpp src/cengine/cengineBase/Window.cpp src/cengine/cengineBase/include/Window.h src/cengine/cengineBase/include/engineErrors.h src/cengine/cengineBase/engineErrors.cpp src/cengine/Cengine.cpp src/cengine/include/Cengine.h src/cengine/cengineBase/Object.cpp src/cengine/cengineBase/include/Object.h src/cengine/cengineBase/Transform.cpp src/cengine/cengineBase/include/Transform.h  src/cengine/components/Component.h src/cengine/components/drawable/Vertex.cpp src/cengine/components/drawable/include/Vertex.h src/cengine/components/drawable/Drawable.cpp src/cengine/components/drawable/include/Drawable.h)
+ExternalProject_Add(SDL2
+        GIT_REPOSITORY https://github.com/spurious/SDL-mirror
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+        )
 
-target_link_libraries(Cengine GL SDL2 GLEW)
+include_directories(${EXTERNAL_INSTALL_LOCATION}/include)
+link_directories(${EXTERNAL_INSTALL_LOCATION}/lib)
+
+add_executable(CEngine
+        cengine_test.cpp
+
+        include/core/world/Vector3.h
+        include/core/world/Vector2.h
+        include/core/actors/components/Component.h
+        include/core/actors/Actor.h
+        include/core/Window.h
+        include/core/Exceptions.h
+        include/core/CEngine.h)
+
+add_dependencies(CEngine SDL2)

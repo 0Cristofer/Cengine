@@ -7,20 +7,23 @@
 
 
 namespace cengine {
+
     class Component {
     public:
+
         Component() = default;
+        virtual ~Component() = default;
+
         virtual void update() = 0;
 
         static bool comp(const cengine::Component* c1, const cengine::Component* c2){
             return c1->_priority < c2->_priority;
         }
 
-        virtual ~Component() = default;
-
     protected:
         int _priority;
-    };
+    }
+    ;
 }
 
 #endif //CENGINE_COMPONENT_H
