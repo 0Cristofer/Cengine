@@ -2,13 +2,13 @@
    Autor: Cristofer Oswald
    Data: 06/08/2018 */
 
-#ifndef CENGINE_ENGINEERRORS_H
-#define CENGINE_ENGINEERRORS_H
+#ifndef CENGINE_EXCEPTIONS_H
+#define CENGINE_EXCEPTIONS_H
 
 #include <string>
 #include "Window.h"
 
-namespace cengine {
+namespace cengine::core {
 
     /**
      * Imprime o erro na tela e finaliza o programa
@@ -23,4 +23,4 @@ namespace cengine {
     extern void error(const std::string &error_string);
 }
 
-#endif //CENGINE_ENGINEERRORS_H
+#endif //CENGINE_EXCEPTIONS_H

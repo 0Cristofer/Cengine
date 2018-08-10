@@ -2,43 +2,44 @@
    Autor: Cristofer Oswald
    Data: 06/08/2018 */
 
-#ifndef CENGINE_OBJECT_H
-#define CENGINE_OBJECT_H
+#ifndef CENGINE_ACTOR_H
+#define CENGINE_ACTOR_H
 
 #include <map>
+#include <core/components/Component.h>
 
-#include "components/CTransform.h"
-#include "../../../src/cengine/components/Component.h"
+namespace cengine::core::actors {
 
-namespace CEngine::Core::Actor {
+    using namespace cengine::core::components;
 
     class AActor {
     public:
 
-        Actor();
-        ~Actor();
+        // Construtore e destrutores
+        AActor()    { AddComponent<CTransform>(); };
+        ~AActor()   { for (auto &i : _components) delete i.second; };
 
         /**
          * Atualiza os componentes no mundo
          */
-        void Update() {}
+        virtual void Update() { for (auto &i : _components) i.second->Update(); }
 
-        template<class Component T>
+        template<typename T, typename std::enable_if<std::is_base_of<CComponent, T>::value>::type* = nullptr>
         void AddComponent() {
-            _components[T] = new T();
+            CComponent *c =  new T();
+            c->actor = this;
+            _components[typeid(T).name()] = c;
         }
 
-        template<class Component T>
-        Component &GetComponent() {
-            return _components[T];
-        }
+        template<typename T, typename std::enable_if<std::is_base_of<CComponent, T>::value>::type* = nullptr>
+        T *GetComponent() { return dynamic_cast<T*>(_components[typeid(T).name()]); }
 
     private:
-        template <class T>
-        std::map<T, Component&> _components;
+        std::map<std::string, CComponent*> _components;
+
 
     };
 
 }
 
-#endif //CENGINE_OBJECT_H
+#endif //CENGINE_ACTOR_H

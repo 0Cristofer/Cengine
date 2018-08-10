@@ -13,11 +13,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
-
-namespace cengine {
-
-    class Window;
-    extern cengine::Window* window;
+namespace cengine::core {
 
     /**
      * Flags de criação da janela
@@ -55,7 +51,7 @@ namespace cengine {
         void closeWindow();
 
         int getScreenWidth();
-        int getScreenheigth();
+        int getScreenHeight();
         bool isVsync();
         bool isInitialized();
 
@@ -69,6 +65,7 @@ namespace cengine {
         SDL_Window* _sdl_window;
         SDL_GLContext _gl_context;
     };
+
 }
 
 #endif //CENGINE_WINDOW_H

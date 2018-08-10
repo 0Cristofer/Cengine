@@ -5,26 +5,27 @@
 #ifndef CENGINE_VECTOR2_H
 #define CENGINE_VECTOR2_H
 
+#include <GL/glew.h>
 #include "Vector3.h"
 
-namespace CEngine::Core {
+namespace cengine::core::world {
 
     template <typename T>
-    class Vector2 : private Vector3<T> {
+    class Vector2 : public Vector3<T> {
     public:
-        T &e1, &e2;
-
-        template <typename T>
-        Vector2(T &e1, T &e2) : Vector3<T>(e1, e2, 0) {}
-
-        template <typename T>
-        virtual ~Vector2() : ~Vector3() {}
-
+        Vector2(T e1, T e2) : Vector3<T>(e1, e2, 0) {}
     };
 
     // Utilidades
-    class Vector2I : public Vector2<int> {};
-    class Vector2F : public Vector2<float> {};
+    class Vector2I : public Vector2<GLint> {
+    public:
+        Vector2I(GLint e1, GLint e2) : Vector2(e1, e2) {}
+    };
+
+    class Vector2F : public Vector2<GLfloat> {
+    public:
+        Vector2F(GLfloat e1, GLfloat e2) : Vector2(e1, e2) {}
+    };
 
 }
 
