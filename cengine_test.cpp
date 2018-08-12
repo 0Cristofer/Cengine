@@ -3,8 +3,7 @@
    Data: 06/08/2018*/
 
 #include <iostream>
-#include <core/components/render/Render.h>
-#include "Cengine.h"
+#include "cengine/Cengine.h"
 
 using namespace cengine;
 

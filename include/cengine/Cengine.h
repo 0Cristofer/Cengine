@@ -7,18 +7,20 @@
 
 #include <string>
 #include <vector>
-#include <core/actors/Actor.h>
-#include "core/Window.h"
-#include "core/actors/Actor.h"
+
+#include <cengine/core/Window.h>
+#include <cengine/core/LifeCycle.h>
+#include <cengine/core/data/Vector3.h>
+#include <cengine/core/data/Vector2.h>
 
 namespace cengine {
+
     using namespace cengine::core;
     /**
      * Classe principal da engine, responsável por controlar os outros componentes e utiliza-los
      */
     class Cengine {
     public:
-        static Cengine& getInstance();
 
         /**
          * Inicializa a instância da engine com o seu nome e tamanho de janela
@@ -43,22 +45,23 @@ namespace cengine {
          */
         void stop();
 
-        void runTest(); //Temporário, serve para adicionar objetos para testes
-
         int getScreenWidth() const;
 
         int getScreenHeight() const;
 
         const std::string &getWindowName() const;
 
+        ILifeCycle *lifeCycle = nullptr;
+
     private:
         int _screen_width, _screen_heigth;
         bool _is_initialized = false;
 
         std::string _window_name;
-        std::vector<actors::AActor*> _objects;
         Window *window;
+
     };
+
 }
 
 #endif //CENGINE_CENGINE_H

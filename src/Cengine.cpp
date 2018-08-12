@@ -3,12 +3,15 @@
    Data: 06/08/2018 */
 
 #include <iostream>
-#include "Cengine.h"
-#include "core/Exceptions.h"
-#include "core/Window.h"
-#include "core/components/render/Render.h"
+#include "cengine/Cengine.h"
+#include <cengine/core/Window.h>
+#include <cengine/core/Debug.h>
+
+#define FRAME_CAP 60
 
 namespace cengine {
+
+    using namespace cengine::core::debug;
 
     void Cengine::init(const std::string &window_name, int screen_width, int screen_heigth){
         _window_name = window_name;
@@ -19,54 +22,54 @@ namespace cengine {
 
     void Cengine::start() {
         if(!_is_initialized) {
-            error("Cengine não está inicializada!");
+            std::cerr << "Cengine não está inicializada!";
             return;
         }
 
         window = new Window();
         window->createWindow(_window_name, _screen_width, _screen_heigth, true, 0);
+
+        lifeCycle->Start();
+
     }
 
     void Cengine::run() {
         SDL_Event windowEvent;
 
         if(!_is_initialized) {
-            error("Cengine não está inicializada!");
+            std::cerr << "Cengine não está inicializada!";
             return;
         }
 
-        runTest();
+        try {
+            while (true) {
 
-        while(true){
-            if(SDL_PollEvent(&windowEvent)){
-                if(windowEvent.type == SDL_QUIT) break;
+                if (SDL_PollEvent(&windowEvent)) {
+                    if (windowEvent.type == SDL_QUIT) break;
+                }
+
+                window->swapBuffer();
+                lifeCycle->Update();
+
+                SDL_Delay(1000 / FRAME_CAP);
+
             }
-
-            window->swapBuffer();
+        } catch (std::exception &e) {
+            Logger::Log(Logger::Type::FATAL, e.what());
         }
+
     }
 
     void Cengine::stop() {
         if(!_is_initialized) {
-            error("Cengine não está inicializada!");
+            std::cerr << "Cengine não está inicializada!";
             return;
         }
 
         window->closeWindow();
         free(window);
-    }
+        lifeCycle->Destroy();
 
-    void Cengine::runTest() {
-        auto &player = *new actors::AActor();
-        player.AddComponent<components::CRender>();
-        components::CRender *render = player.GetComponent<components::CRender>();
-        std::cout << "Name: " << render->name << std::endl;
-    }
-
-    Cengine& Cengine::getInstance() {
-        static Cengine instance;
-
-        return instance;
     }
 
     int Cengine::getScreenWidth() const {
@@ -80,4 +83,5 @@ namespace cengine {
     const std::string &Cengine::getWindowName() const {
         return _window_name;
     }
+
 }

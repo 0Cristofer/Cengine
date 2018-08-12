@@ -4,8 +4,8 @@
 
 // Baseado na Bengine
 
-#include "core/Window.h"
-#include "core/Exceptions.h"
+#include <iostream>
+#include <cengine/core/Window.h>
 
 namespace cengine::core {
 
@@ -51,14 +51,14 @@ namespace cengine::core {
                                       flags);
 
         if (_sdl_window == nullptr) {
-            fatalError("Erro ao iniciar janela SDL");
+            std::cerr << "Erro ao iniciar janela SDL";
         }
 
         //Inicializa o openGl
         _gl_context = SDL_GL_CreateContext(_sdl_window);
 
         if (_gl_context == nullptr) {
-            fatalError("Erro ao criar contexto OpenGL");
+            std::cerr << "Erro ao iniciar janela OpenGL";
         }
 
         //Verifica a verão do opengl
@@ -67,7 +67,7 @@ namespace cengine::core {
         //Inicia os sistemas do glew
         glewExperimental = GL_TRUE;
         if (glewInit() != GLEW_OK) {
-            fatalError("Não foi possível inicializar glew");
+            std::cerr << "Erro ao iniciar janela glew";
         }
 
         /* Não funciona ainda
@@ -88,7 +88,7 @@ namespace cengine::core {
 
     void Window::swapBuffer(){
         if(!_is_initialized) {
-            error("Janela não inicializada");
+            std::cerr << "Janela nao inicializada";
             return;
         }
 
@@ -97,7 +97,7 @@ namespace cengine::core {
 
     void Window::closeWindow() {
         if(!_is_initialized) {
-            error("Janela não inicializada");
+            std::cerr << "Janela nao inicializada";
             return;
         }
 
