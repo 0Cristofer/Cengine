@@ -28,10 +28,6 @@ namespace cengine::core::debug {
         };
 
         static void Log(Type type, std::string msg) {
-
-            std::time_t t = std::time(0);   // get time now
-            std::tm* now = std::localtime(&t);
-
             switch (type) {
                 case NORMAL:    std::cout << TEXT_BLUE << currentDateTime() << TEXT_WHITE       << "\t MESSAGE : " << msg << TEXT_RESET << std::endl; break;
                 case WARNING:   std::cout << TEXT_BLUE << currentDateTime() << TEXT_YELLOW      << "\t WARNING : " << msg << TEXT_RESET << std::endl; break;

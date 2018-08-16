@@ -120,4 +120,8 @@ namespace cengine::core {
     bool Window::isInitialized() {
         return _is_initialized;
     }
+
+    void Window::destroy() {
+        free(this);
+    }
 }

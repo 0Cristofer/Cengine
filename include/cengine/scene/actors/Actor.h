@@ -24,7 +24,7 @@ namespace cengine::scene::actor {
         // Construtore e destrutores
         AActor() { AddComponent<CTransform>(); };
 
-        ~AActor() { for (auto &i : _components) delete i.second; };
+        ~AActor() { };
 
         virtual void Start()    { for (auto &i : _components) i.second->Start(); }
         virtual void Update()   { for (auto &i : _components) if (i.second->enabled) i.second->Update(); }

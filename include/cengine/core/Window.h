@@ -54,6 +54,7 @@ namespace cengine::core {
         int getScreenHeight();
         bool isVsync();
         bool isInitialized();
+        void destroy();
 
     private:
         int _screen_width;

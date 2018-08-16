@@ -20,7 +20,7 @@ int main() {
     auto *scene = new Scene();
     scene->AddActor(actor);
 
-    engine.lifeCycle = dynamic_cast<ILifeCycle*>(scene);
+    engine.lifeCycle = dynamic_cast<cengine::ILifeCycle*>(scene);
     engine.init("Game", 800, 600);
     engine.start();
     engine.run();

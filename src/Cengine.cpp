@@ -67,7 +67,7 @@ namespace cengine {
         }
 
         window->closeWindow();
-        free(window);
+        window->destroy();
         lifeCycle->Destroy();
 
     }
